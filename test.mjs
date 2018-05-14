@@ -1,13 +1,12 @@
 import assert from "assert";
 import http from "http";
-import querystring from "querystring";
 
-const postData = querystring.stringify({
+const postData = JSON.stringify({
     "msg": "Hello world!"
 });
 
 const options = {
-    hostname: "www.codequalityconsulting.com",
+    hostname: "127.0.0.1",
     port: 3001,
     path: "/email-address",
     method: "POST",
@@ -21,14 +20,22 @@ const req = http.request(options, (res) => {
     console.log(`STATUS: ${res.statusCode}`);
     console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
     res.setEncoding("utf8");
-    res.on("data", (chunk) => console.log(`BODY: ${chunk}`));
-    res.on("end", () => console.log("No more data in response"));
+    let data = [];
+    res.on("data", function(chunk) {
+        console.log("Here's a chunk: ", chunk);
+        data.push(chunk);
+    });
+    debugger;
+    res.on("end", function() {
+        const body = Buffer.concat(data).toString();
+        assert.strictEqual(body, '{"msg":"Hello world!"}');
+    });
 });
-
-req.on("error", (e) => console.error(`Problem with requuest: ${e.message}`));
+debugger;
+req.on("error", (e) => console.error(`Problem with request: ${e.message}`));
 
 req.write(postData);
+debugger;
 req.end();
 
 
-assert.strictEqual();
