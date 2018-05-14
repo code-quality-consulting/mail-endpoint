@@ -1,3 +1,6 @@
+/*jslint
+    node
+*/
 import assert from "assert";
 import http from "http";
 
@@ -16,17 +19,17 @@ const options = {
     }
 };
 
-const req = http.request(options, (res) => {
+const req = http.request(options, function (res) {
     console.log(`STATUS: ${res.statusCode}`);
     console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
     res.setEncoding("utf8");
     let data = "";
-    res.on("data", function(chunk) {
+    res.on("data", function (chunk) {
         console.log("Here's a chunk: ", chunk);
         data += chunk;
     });
-    res.on("end", function() {
-        assert.strictEqual(data, '{"msg":"Hello world!"}');
+    res.on("end", function () {
+        assert.strictEqual(data, `{"msg":"Hello world!"}`);
         console.log("Success");
     });
 });
