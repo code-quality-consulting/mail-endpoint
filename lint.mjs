@@ -2,7 +2,7 @@
     node
 */
 
-import jslint from "../dependencies/jslint";
+import jslint from "./dependencies/jslint";
 import fs from "fs";
 const fileNames = process.argv.slice(2);
 
@@ -16,6 +16,9 @@ fileNames.forEach(function (fileName) {
             console.log(fileName + " is okay.");
         }
         if (lintedCode.ok === false) {
+            console.error(
+                `Errors under ${fileName}`
+            );
             lintedCode.warnings.forEach((warning) => console.error(
                 `${warning.message}`
                 + ` at line ${warning.line}`

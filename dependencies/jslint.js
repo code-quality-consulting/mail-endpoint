@@ -1,3 +1,7 @@
+/*jslint
+    node
+*/
+
 // jslint.js
 // 2018-04-25
 // Copyright (c) 2015 Douglas Crockford  (www.JSLint.com)
