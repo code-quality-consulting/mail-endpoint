@@ -25,17 +25,15 @@ const req = http.request(options, (res) => {
         console.log("Here's a chunk: ", chunk);
         data.push(chunk);
     });
-    debugger;
     res.on("end", function() {
         const body = Buffer.concat(data).toString();
         assert.strictEqual(body, '{"msg":"Hello world!"}');
     });
 });
-debugger;
 req.on("error", (e) => console.error(`Problem with request: ${e.message}`));
-
+req.setTimeout(5000, function () {
+    console.error("No response.");
+});
 req.write(postData);
-debugger;
 req.end();
-
 
