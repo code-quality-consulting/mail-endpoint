@@ -5021,3 +5021,5 @@ const jslint = (function JSLint() {
         };
     };
 }());
+
+module.exports = jslint;
