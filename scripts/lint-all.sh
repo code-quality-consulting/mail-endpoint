@@ -1,5 +1,5 @@
 node --experimental-modules lint.mjs \
 ./tests/request.mjs \
 ./dependencies/jslint.js \
-./index.js \
+./server.mjs \
 ./lint.mjs

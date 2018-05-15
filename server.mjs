@@ -2,10 +2,9 @@
     node
 */
 
-const server = require("http").createServer;
+import http from "http";
 
-server(function (req, res) {
-    "use strict";
+const server = http.createServer(function (req, res) {
     let body = [];
     req.on("error", (err) => console.err(err))
         .on("data", function (chunk) {
@@ -22,3 +21,5 @@ server(function (req, res) {
             res.end();
         });
 }).listen(3001);
+
+export default server;
