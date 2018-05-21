@@ -3,7 +3,7 @@
 */
 import assert from "assert";
 import http from "http";
-import server from "../server"
+import server from "../server";
 
 const postData = JSON.stringify({
     "msg": "Hello world!"
@@ -32,6 +32,7 @@ const req = http.request(options, function (res) {
     res.on("end", function () {
         assert.strictEqual(data, `{"msg":"Hello world!"}`);
         console.log("Success");
+        server.close(() => console.log("Server closed."));
     });
 });
 req.on("error", (e) => console.error(`Problem with request: ${e.message}`));
