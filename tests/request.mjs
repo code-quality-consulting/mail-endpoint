@@ -3,6 +3,7 @@
 */
 import assert from "assert";
 import http from "http";
+import server from "../server"
 
 const postData = JSON.stringify({
     "msg": "Hello world!"
