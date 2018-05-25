@@ -12,7 +12,7 @@ function testRequest(value, reason) {
     }
     if (value) {
         assert.strictEqual(value, `{"msg":"Hello world!"}`);
-        console.log("Success");
+        console.log("Request successfully posts.");
     }
 }
 

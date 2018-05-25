@@ -1,4 +1,5 @@
 function configureEnv() {
+    process.env.PORT = 3001;
     return (callback) => callback();
 }
 
