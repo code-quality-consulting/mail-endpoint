@@ -46,7 +46,10 @@ function testRequestor(callback, server) {
             server.close(() => console.log("Server closed."));
         });
     });
-    req.on("error", (e) => console.error(`Problem with request: ${e.message}`));
+    req.on(
+        "error",
+        (e) => console.error(`Problem with request: ${e.message}`)
+    );
     req.setTimeout(5000, function () {
         console.error("No response.");
     });
