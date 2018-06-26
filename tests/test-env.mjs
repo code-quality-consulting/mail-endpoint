@@ -12,17 +12,29 @@ function testEnvVariables() {
         Object.keys(process.env).length
     );
 
-    const pseudoProcess = {
+    const evilPseudoProcess = {
         env: {
             EVIL_VARIABLE: true
+        }
+    };
+    const goodPseudoProcess = {
+        env: {
+            PORT: "3000"
         }
     };
 
     assert.strictEqual(
         true,
-        checkEnvIntruders(pseudoProcess.env)
+        checkEnvIntruders(evilPseudoProcess.env)
     );
-    console.log("Success: Number of environment variables is set to 0.");
-}
+    
+    assert.strictEqual(
+        false,
+        checkEnvIntruders(goodPseudoProcess.env, ["PORT"])     
+    );
+
+    console.log("Success: All environment variables authorized.");
+
+    }
 
 export default testEnvVariables;
