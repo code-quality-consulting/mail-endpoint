@@ -58,4 +58,8 @@ function testRequestor(callback, server) {
 
 }
 
-parseq.sequence([serverRequestor, testRequestor])(testRequest);
+function testPostServer() {
+    parseq.sequence([serverRequestor, testRequestor])(testRequest);
+}
+
+export default testPostServer;

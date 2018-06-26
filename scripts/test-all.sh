@@ -1,1 +1,1 @@
-node --experimental-modules tests/*
+node --experimental-modules tests/test-runner.mjs
