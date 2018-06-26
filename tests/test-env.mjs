@@ -18,13 +18,11 @@ function testEnvVariables() {
         }
     };
 
-    if (!pseudoProcess.env.ALLOWED_VARIABLES) {
-        assert.strictEqual(
-            true,
-            checkEnvIntruders(pseudoProcess.env)
-        );
-        console.log("Success: Number of environment variables is set to 0.");
-    }
+    assert.strictEqual(
+        true,
+        checkEnvIntruders(pseudoProcess.env)
+    );
+    console.log("Success: Number of environment variables is set to 0.");
 }
 
 export default testEnvVariables;
