@@ -4,6 +4,7 @@
 
 import process from "process";
 import assert from "assert";
+import checkEnvIntruders from "../library/configure-env";
 
 function testEnvVariables() {
     console.log(
@@ -11,8 +12,19 @@ function testEnvVariables() {
         Object.keys(process.env).length
     );
 
-    assert.strictEqual(Object.keys(process.env).length, 0);
-    console.log("Success: Number of environment variables is set to 0.");
+    const pseudoProcess = {
+        env: {
+            EVIL_VARIABLE: true
+        }
+    };
+
+    if (!pseudoProcess.env.ALLOWED_VARIABLES) {
+        assert.strictEqual(
+            true,
+            checkEnvIntruders(pseudoProcess.env)
+        );
+        console.log("Success: Number of environment variables is set to 0.");
+    }
 }
 
 export default testEnvVariables;
