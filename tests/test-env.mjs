@@ -30,6 +30,10 @@ function testEnvVariables() {
         }
     };
 
+    const emptyPseudoProcess = {
+        env: {}
+    };
+
     assert.strictEqual(
         true,
         checkEnvIntruders(evilPseudoProcess.env)
@@ -43,6 +47,11 @@ function testEnvVariables() {
     assert.strictEqual(
         true,
         checkEnvIntruders(mixedPseudoProcess.env, ["PORT"])
+    );
+
+    assert.strictEqual(
+        false,
+        checkEnvIntruders(emptyPseudoProcess.env)
     );
 
 
