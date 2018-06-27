@@ -54,6 +54,11 @@ function testEnvVariables() {
         checkEnvIntruders(emptyPseudoProcess.env)
     );
 
+    assert.strictEqual(
+        false,
+        checkEnvIntruders(emptyPseudoProcess.env, ["PORT"])
+    );
+
 
     console.log("Success: All environment variables authorized.");
 
