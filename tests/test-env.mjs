@@ -23,6 +23,13 @@ function testEnvVariables() {
         }
     };
 
+    const mixedPseudoProcess = {
+        env: {
+            PORT: "3000",
+            HOST: "http://localhost:8800/"
+        }
+    };
+
     assert.strictEqual(
         true,
         checkEnvIntruders(evilPseudoProcess.env)
@@ -32,6 +39,12 @@ function testEnvVariables() {
         false,
         checkEnvIntruders(goodPseudoProcess.env, ["PORT"])
     );
+
+    assert.strictEqual(
+        true,
+        checkEnvIntruders(mixedPseudoProcess.env, ["PORT"])
+    );
+
 
     console.log("Success: All environment variables authorized.");
 
