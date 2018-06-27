@@ -27,14 +27,14 @@ function testEnvVariables() {
         true,
         checkEnvIntruders(evilPseudoProcess.env)
     );
-    
+
     assert.strictEqual(
         false,
-        checkEnvIntruders(goodPseudoProcess.env, ["PORT"])     
+        checkEnvIntruders(goodPseudoProcess.env, ["PORT"])
     );
 
     console.log("Success: All environment variables authorized.");
 
-    }
+}
 
 export default testEnvVariables;
