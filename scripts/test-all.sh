@@ -1,1 +1,1 @@
-env -i node --experimental-modules tests/test-runner.mjs
+env -i $(cat ./env) node --experimental-modules tests/test-runner.mjs
