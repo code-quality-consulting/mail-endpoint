@@ -22,7 +22,7 @@ function makeServer(environmentVariables) {
                     res.write(body);
                     res.end();
                 });
-        }).listen(environmentVariables.PORT, function () {
+        }).listen(environmentVariables.PORT, environmentVariables.HOST, function () {
             callback(server);
         });
     };

@@ -21,9 +21,9 @@ function makeTester(environmentVariables) {
         const postData = JSON.stringify({
             "msg": "Hello world!"
         });
-        let {PORT} = environmentVariables;
+        let {PORT, HOST} = environmentVariables;
         const options = {
-            hostname: "127.0.0.1",
+            hostname: HOST,
             port: PORT,
             path: "/email-address",
             method: "POST",
@@ -32,7 +32,6 @@ function makeTester(environmentVariables) {
                 "Content-Length": Buffer.byteLength(postData)
             }
         };
-
         const req = http.request(options, function (res) {
             console.log(`STATUS: ${res.statusCode}`);
             console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
