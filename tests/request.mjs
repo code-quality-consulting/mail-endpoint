@@ -4,7 +4,7 @@
 import assert from "assert";
 import http from "http";
 import parseq from "../dependencies/parseq.mjs";
-import {serverRequestor} from "../server";
+import {makeServer} from "../server";
 
 function testRequest(value, reason) {
     if (reason) {
@@ -61,7 +61,7 @@ function makeTester(environmentVariables) {
 }
 
 function testPostServer(environmentVariables) {
-    parseq.sequence([serverRequestor, makeTester(environmentVariables)])(testRequest);
+    parseq.sequence([makeServer(environmentVariables), makeTester(environmentVariables)])(testRequest);
 }
 
 export default testPostServer;
