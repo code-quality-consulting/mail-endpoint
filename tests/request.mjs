@@ -11,7 +11,10 @@ function testRequest(value, reason) {
         console.error(reason);
     }
     if (value) {
-        assert.strictEqual(value, `{"msg":"Hello world!"}`);
+        assert.strictEqual(value.email, "pseudouser@pseudodomains.com");
+        assert.strictEqual(value.groups[0], "tdd");
+        assert.strictEqual(value.firstName, "Pseudo");
+        assert.strictEqual(value.lastName, "User");
         console.log("Request successfully posts.");
     }
 }
@@ -19,7 +22,10 @@ function testRequest(value, reason) {
 function makeTester(environmentVariables) {
     return function testRequestor(callback, server) {
         const postData = JSON.stringify({
-            "msg": "Hello world!"
+            email: "pseudouser@pseudodomains.com",
+            groups: ["tdd"],
+            firstName: "Pseudo", 
+            lastName: "User"
         });
         let {PORT, HOST} = environmentVariables;
         const options = {
@@ -42,7 +48,8 @@ function makeTester(environmentVariables) {
                 data += chunk;
             });
             res.on("end", function () {
-                callback(data);
+                let subscriberInfo = data
+                callback(JSON.parse(subscriberInfo));
                 server.close(() => console.log("Server closed."));
             });
         });
