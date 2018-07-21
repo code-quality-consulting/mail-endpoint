@@ -24,7 +24,7 @@ function makeTester(environmentVariables) {
         const postData = JSON.stringify({
             email: "pseudouser@pseudodomains.com",
             groups: ["tdd"],
-            firstName: "Pseudo", 
+            firstName: "Pseudo",
             lastName: "User"
         });
         let {PORT, HOST} = environmentVariables;
@@ -48,7 +48,7 @@ function makeTester(environmentVariables) {
                 data += chunk;
             });
             res.on("end", function () {
-                let subscriberInfo = data
+                let subscriberInfo = data;
                 callback(JSON.parse(subscriberInfo));
                 server.close(() => console.log("Server closed."));
             });
