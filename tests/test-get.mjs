@@ -8,17 +8,17 @@ const {ML_API_KEY} = process.env;
 
 function testRequest(value, reason) {
     if (reason) {
-        console.log(reason);
+        console.log("Here is the reason: ", reason);
     }
     if (value) {
         console.log("Here is the value: ", value);
         assert.strictEqual(value[0].email, "demo@gmail.com");
-        //console.log("Request successfully gets.");
+        console.log("Request successfully gets.");
     }
 }
 
 function makeTester(environmentVariables) {
-    return function testRequestor(server, callback) {
+    return function testRequestor(callback) {
         const getData = JSON.stringify({
             email: "demo@gmail.com"
         });
@@ -35,7 +35,6 @@ function makeTester(environmentVariables) {
             }
         };
         const req = https.request(options, function (res) {
-            // console.log("RESPONSE OBJECT GET: ", res);
             console.log(`STATUS OF GET: ${res.statusCode}`);
             console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
             res.setEncoding("utf8");
@@ -45,7 +44,7 @@ function makeTester(environmentVariables) {
             });
             res.on("end", function () {
                 let subscriberInfo = data;
-                console.log(JSON.parse(subscriberInfo));
+                callback(JSON.parse(subscriberInfo));
             });
         });
 
@@ -62,6 +61,7 @@ function makeTester(environmentVariables) {
 }
 
 function testGetServer(environmentVariables) {
+    console.log("We made it to testGetServer.");
     parseq.sequence([makeTester(environmentVariables)])(testRequest);
 }
 
