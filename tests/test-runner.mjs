@@ -2,7 +2,7 @@
     node
 */
 
-import testPostServer from "./request";
+import testPostServer from "./client-post-request";
 import testGetServer from "./test-get";
 import testEnvVariables from "./test-env";
 const {CQC_PORT, CQC_HOST, ML_PORT, ML_HOST} = process.env;
