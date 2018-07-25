@@ -7,3 +7,7 @@ Test for:
 * Request POST to mailerlite (COMPLETE)
 * Check GET response from mailerlite (todo)
 * Clear (DELETE) database and receive back empty database (todo)
+
+Script Usage:
+* Use all scripts from root directory like so:
+. scripts/nameOfScript.sh
