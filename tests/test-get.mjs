@@ -4,15 +4,15 @@
 import https from "https";
 import assert from "assert";
 import parseq from "../dependencies/parseq.mjs";
-const {ML_API_KEY} = process.env;
+const {ML_API_KEY, CQC_GROUP_ID} = process.env;
 
 function testRequest(value, reason) {
     if (reason) {
         console.log("Here is the reason: ", reason);
     }
     if (value) {
-        console.log("Here is the value: ", value);
-        assert.strictEqual(value[0].email, "demo@gmail.com");
+        console.log("tests/test-get.mjs:14: Here is the value returned from GET: ", value);
+//      assert.strictEqual(value[0].email, "demo@mailerlite.com");
         console.log("Request successfully gets.");
     }
 }
@@ -25,7 +25,7 @@ function makeTester(environmentVariables) {
         const {PORT, HOST} = environmentVariables;
         const options = {
             hostname: HOST,
-            path: "/api/v2/subscribers/search?query=demo@gmail.com",
+            path: `/api/v2/groups/${CQC_GROUP_ID}/subscribers`,
             port: PORT,
             method: "GET",
             headers: {
