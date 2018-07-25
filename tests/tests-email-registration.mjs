@@ -3,9 +3,10 @@
 */
 import assert from "assert";
 import makeTester from "./test-get";
+import registerEmail from "./api-post-request";
 import parseq from "../dependencies/parseq";
 
-function testEmailRegistration(value, reason) {
+function emailRegistrationAssertions(value, reason) {
     if (reason) {
         console.log("Here is the reason: ", reason);
     }
@@ -15,9 +16,12 @@ function testEmailRegistration(value, reason) {
     }
 }
 
-function testGetServer(environmentVariables) {
-    parseq.sequence([makeTester(environmentVariables)])(testEmailRegistration);
+function testEmailRegistration(environmentVariables) {
+    return parseq.sequence([
+        makeTester(environmentVariables),
+        registerEmail(environmentVariables)
+    ])(emailRegistrationAssertions);
 }
 
 
-export default testGetServer;
+export default testEmailRegistration;
