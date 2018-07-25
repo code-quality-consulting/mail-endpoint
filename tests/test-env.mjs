@@ -2,16 +2,10 @@
     node
 */
 
-import process from "process";
 import assert from "assert";
 import checkEnvIntruders from "../library/configure-env";
 
 function testEnvVariables() {
-    console.log(
-        "Number of environment variables set is ",
-        Object.keys(process.env).length
-    );
-
     const evilPseudoProcess = {
         env: {
             EVIL_VARIABLE: true

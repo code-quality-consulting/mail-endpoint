@@ -39,12 +39,9 @@ function makeTester(environmentVariables) {
             }
         };
         const req = http.request(options, function (res) {
-            console.log(`STATUS: ${res.statusCode}`);
-            console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
             res.setEncoding("utf8");
             let data = "";
             res.on("data", function (chunk) {
-                console.log("Here's a chunk: ", chunk);
                 data += chunk;
             });
             res.on("end", function () {

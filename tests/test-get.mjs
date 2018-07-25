@@ -2,20 +2,10 @@
     node
 */
 import https from "https";
-import assert from "assert";
 import parseq from "../dependencies/parseq.mjs";
+import testEmailRegistration from "./tests-email-registration";
 const {ML_API_KEY, CQC_GROUP_ID} = process.env;
 
-function testRequest(value, reason) {
-    if (reason) {
-        console.log("Here is the reason: ", reason);
-    }
-    if (value) {
-        console.log("tests/test-get.mjs:14: Here is the value returned from GET: ", value);
-//      assert.strictEqual(value[0].email, "demo@mailerlite.com");
-        console.log("Request successfully gets.");
-    }
-}
 
 function makeTester(environmentVariables) {
     return function testRequestor(callback) {
@@ -35,8 +25,6 @@ function makeTester(environmentVariables) {
             }
         };
         const req = https.request(options, function (res) {
-            console.log(`STATUS OF GET: ${res.statusCode}`);
-            console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
             res.setEncoding("utf8");
             let data = "";
             res.on("data", function (chunk) {
@@ -61,8 +49,7 @@ function makeTester(environmentVariables) {
 }
 
 function testGetServer(environmentVariables) {
-    console.log("We made it to testGetServer.");
-    parseq.sequence([makeTester(environmentVariables)])(testRequest);
+    parseq.sequence([makeTester(environmentVariables)])(testEmailRegistration);
 }
 
 export default testGetServer;

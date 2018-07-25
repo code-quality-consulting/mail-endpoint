@@ -12,4 +12,3 @@ testGetServer({PORT: ML_PORT, HOST: ML_HOST});
 testPostServer({PORT: CQC_PORT, HOST: CQC_HOST});
 registerEmail({PORT: ML_PORT, HOST: ML_HOST, CQC_GROUP_ID, ML_API_KEY});
 testEnvVariables();
-console.log("Here is the new environment and its variables: ", process.env);
