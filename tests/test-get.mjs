@@ -2,17 +2,13 @@
     node
 */
 import https from "https";
-import parseq from "../dependencies/parseq.mjs";
-import testEmailRegistration from "./tests-email-registration";
-const {ML_API_KEY, CQC_GROUP_ID} = process.env;
-
 
 function makeTester(environmentVariables) {
     return function testRequestor(callback) {
         const getData = JSON.stringify({
             email: "demo@gmail.com"
         });
-        const {PORT, HOST} = environmentVariables;
+        const {PORT, HOST, ML_API_KEY, CQC_GROUP_ID} = environmentVariables;
         const options = {
             hostname: HOST,
             path: `/api/v2/groups/${CQC_GROUP_ID}/subscribers`,
@@ -48,8 +44,4 @@ function makeTester(environmentVariables) {
     };
 }
 
-function testGetServer(environmentVariables) {
-    parseq.sequence([makeTester(environmentVariables)])(testEmailRegistration);
-}
-
-export default testGetServer;
+export default makeTester;

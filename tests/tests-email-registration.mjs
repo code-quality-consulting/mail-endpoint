@@ -2,8 +2,10 @@
     node
 */
 import assert from "assert";
+import makeTester from "./test-get";
+import parseq from "../dependencies/parseq";
 
-function testRequest(value, reason) {
+function testEmailRegistration(value, reason) {
     if (reason) {
         console.log("Here is the reason: ", reason);
     }
@@ -13,4 +15,9 @@ function testRequest(value, reason) {
     }
 }
 
-export default testRequest;
+function testGetServer(environmentVariables) {
+    parseq.sequence([makeTester(environmentVariables)])(testEmailRegistration);
+}
+
+
+export default testGetServer;
