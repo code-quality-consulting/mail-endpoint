@@ -2,7 +2,7 @@
     node
 */
 import assert from "assert";
-import checkEmailAbsence from "./test-get";
+import checkEmailAbsence from "./check-email-absence";
 import registerEmail from "./api-post-request";
 import parseq from "../dependencies/parseq";
 
