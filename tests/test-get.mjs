@@ -3,7 +3,7 @@
 */
 import https from "https";
 
-function makeTester(environmentVariables) {
+function checkEmailAbsence(environmentVariables) {
     return function testRequestor(callback) {
         const getData = JSON.stringify({
             email: "demo@gmail.com"
@@ -44,4 +44,4 @@ function makeTester(environmentVariables) {
     };
 }
 
-export default makeTester;
+export default checkEmailAbsence;

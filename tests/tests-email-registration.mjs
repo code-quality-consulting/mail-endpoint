@@ -2,7 +2,7 @@
     node
 */
 import assert from "assert";
-import makeTester from "./test-get";
+import checkEmailAbsence from "./test-get";
 import registerEmail from "./api-post-request";
 import parseq from "../dependencies/parseq";
 
@@ -18,7 +18,7 @@ function emailRegistrationAssertions(value, reason) {
 
 function testEmailRegistration(environmentVariables) {
     return parseq.sequence([
-        makeTester(environmentVariables),
+        checkEmailAbsence(environmentVariables),
         registerEmail(environmentVariables)
     ])(emailRegistrationAssertions);
 }
