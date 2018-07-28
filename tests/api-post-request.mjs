@@ -6,7 +6,7 @@ import https from "https";
 function registerEmail(environmentVariables) {
     return function registrationRequestor(callback) {
         const postData = JSON.stringify({
-            email: "demo@gmail.com",
+            email: "demo@cqc.com",
             name: "Zach and Ben",
             fields: {
                 company: "MailerLite"
