@@ -5,13 +5,14 @@ import assert from "assert";
 import checkEmailAbsence from "./check-email-absence";
 import registerEmail from "./api-post-request";
 import parseq from "../dependencies/parseq";
+// import DELETE re
 
 function emailRegistrationAssertions(value, reason) {
     if (reason) {
-        console.log("Here is the reason: ", reason);
+        console.error(reason);
     }
     if (value) {
-        assert.strictEqual(value.email, "demo@mailerlite.com");
+        assert.strictEqual(value.email, "demo@cqc.com");
         console.log("Request successfully gets.");
     }
 }
