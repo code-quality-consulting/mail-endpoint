@@ -5,41 +5,44 @@ import https from "https";
 
 function checkEmailAbsence(environmentVariables) {
     return function testRequestor(callback) {
-        const getData = JSON.stringify({
-            email: "demo@gmail.com"
-        });
-        const {PORT, HOST, ML_API_KEY, CQC_GROUP_ID} = environmentVariables;
+        const email = "demo@cqc.com";
+        const {PORT, HOST, ML_API_KEY} = environmentVariables;
         const options = {
             hostname: HOST,
-            path: `/api/v2/groups/${CQC_GROUP_ID}/subscribers`,
+            path: `/api/v2/subscribers/${email}`,
             port: PORT,
-            method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Content-Length": Buffer.byteLength(getData),
                 "X-MailerLite-ApiKey": ML_API_KEY
             }
         };
-        const req = https.request(options, function (res) {
+
+        const req = https.get(options, function (res) {
             res.setEncoding("utf8");
             let data = "";
             res.on("data", function (chunk) {
                 data += chunk;
             });
             res.on("end", function () {
-                let subscriberInfo = data;
-                callback(JSON.parse(subscriberInfo));
+                let subscriberInfo = JSON.parse(data);
+                if (subscriberInfo.error) {
+                    callback(subscriberInfo.error.message);
+                }
+                if (!subscriberInfo.error) {
+                    callback(
+                        undefined,
+                        `${subscriberInfo.email} is in the database.`
+                    );
+                }
             });
         });
+
 
         req.on("error", (e) => console.error(`Problem with request: ${e.message}`));
 
         req.setTimeout(5000, function () {
             console.error("No response");
         });
-
-        req.write(getData);
-        req.end();
 
     };
 }
