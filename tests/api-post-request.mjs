@@ -5,6 +5,7 @@ import https from "https";
 
 function registerEmail(environmentVariables) {
     return function registrationRequestor(callback) {
+
         const postData = JSON.stringify({
             email: "demo@cqc.com",
             name: "Zach and Ben",
@@ -30,6 +31,7 @@ function registerEmail(environmentVariables) {
             let data = "";
             res.on("data", function (chunk) {
                 data += chunk;
+                console.log(data);
             });
             res.on("end", function () {
                 let subscriberInfo = data;
@@ -37,16 +39,14 @@ function registerEmail(environmentVariables) {
             });
         });
 
-        req.on("error", (e) => console.error(`Problem with request: ${e.message}`));
+        req.on("error", (e) => callback(undefined, `Problem with request: ${e.message}`));
 
         req.setTimeout(5000, function () {
             console.error("No response");
         });
 
         req.write(postData);
-
         req.end();
     };
 }
-
 export default registerEmail;
