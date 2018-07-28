@@ -15,7 +15,7 @@ function testRequest(value, reason) {
         assert.strictEqual(value.groups[0], "tdd");
         assert.strictEqual(value.firstName, "Pseudo");
         assert.strictEqual(value.lastName, "User");
-        console.log("Request successfully posts.");
+        console.log("Client request successfully posts.");
     }
 }
 
