@@ -31,7 +31,6 @@ function registerEmail(environmentVariables) {
             let data = "";
             res.on("data", function (chunk) {
                 data += chunk;
-                console.log(data);
             });
             res.on("end", function () {
                 let subscriberInfo = data;

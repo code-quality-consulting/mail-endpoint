@@ -37,13 +37,14 @@ function checkEmailAbsence(environmentVariables) {
             });
         });
 
-
-        req.on("error", (e) => console.error(`Problem with request: ${e.message}`));
+        req.on(
+            "error",
+            (e) => console.error(`Problem with request: ${e.message}`)
+        );
 
         req.setTimeout(5000, function () {
             console.error("No response");
         });
-
     };
 }
 

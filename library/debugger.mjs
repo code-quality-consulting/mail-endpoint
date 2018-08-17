@@ -9,13 +9,3 @@ export default function (nameOfFile) {
         };
     };
 };
-
-
-/*
-export default function (color) {
-    function (string) {
-        console.log(string);
-    }
-    console.log(string);
-}
-*/
