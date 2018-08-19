@@ -9,9 +9,4 @@ function checkEnvIntruders(envVariables, allowedVariables = []) {
     return true; 
 }
 
-/*function configureEnv() {
-    process.env.PORT = 3001;
-    return (callback) => callback();
-}*/
-
 export default checkEnvIntruders; 
