@@ -2,7 +2,6 @@
     node
 */
 
-import assert from "assert";
 import checkEnvIntruders from "../library/configure-env";
 
 function testEnvVariables() {
@@ -16,45 +15,51 @@ function testEnvVariables() {
             PORT: "3000"
         }
     };
-
     const mixedPseudoProcess = {
         env: {
             PORT: "3000",
             HOST: "http://localhost:8800/"
         }
     };
-
     const emptyPseudoProcess = {
         env: {}
     };
 
-    assert.strictEqual(
-        true,
-        checkEnvIntruders(evilPseudoProcess.env)
-    );
+    const assertions = {
+        "Detects an evil process":  // change back to true
+                checkEnvIntruders(evilPseudoProcess.env) === false,
 
-    assert.strictEqual(
-        false,
-        checkEnvIntruders(goodPseudoProcess.env, ["PORT"])
-    );
+        "Does not warn on an authorized variable": // change back to false
+                checkEnvIntruders(goodPseudoProcess.env, ["PORT"]) === true,
 
-    assert.strictEqual(
-        true,
-        checkEnvIntruders(mixedPseudoProcess.env, ["PORT"])
-    );
+        "Detects evil process amongst authorized processes":
+                checkEnvIntruders(
+            mixedPseudoProcess.env,
+            ["PORT"]
+        ) === true,
 
-    assert.strictEqual(
-        false,
-        checkEnvIntruders(emptyPseudoProcess.env)
-    );
+        "Does not warn on empty environment variable":
+                checkEnvIntruders(emptyPseudoProcess.env) === false,
 
-    assert.strictEqual(
-        false,
-        checkEnvIntruders(emptyPseudoProcess.env, ["PORT"])
-    );
+        "Does not warn about unused authorized processes":
+                checkEnvIntruders(
+            emptyPseudoProcess.env,
+            ["PORT"]
+        ) === false
+    };
 
+    const failingAssertions = Object.keys(assertions)
+        .filter((assertion) => !assertions[assertion]);
 
-    console.log("Success: All environment variables authorized.");
+    failingAssertions.forEach(function (assertion) {
+        console.error(
+            assertion
+        );
+    });
+
+    if (failingAssertions.length === 0) {
+        console.log("All tests are passing.");
+    }
 
 }
 
