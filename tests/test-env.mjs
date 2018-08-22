@@ -26,30 +26,33 @@ function testEnvVariables() {
     };
 
     const assertions = {
-        "Detects an evil process":  // change back to true
-                checkEnvIntruders(evilPseudoProcess.env) === false,
-
-        "Does not warn on an authorized variable": // change back to false
-                checkEnvIntruders(goodPseudoProcess.env, ["PORT"]) === true,
-
-        "Detects evil process amongst authorized processes":
-                checkEnvIntruders(
-            mixedPseudoProcess.env,
-            ["PORT"]
-        ) === true,
-
-        "Does not warn on empty environment variable":
-                checkEnvIntruders(emptyPseudoProcess.env) === false,
-
-        "Does not warn about unused authorized processes":
-                checkEnvIntruders(
-            emptyPseudoProcess.env,
-            ["PORT"]
-        ) === false
+        "It should detect unauthorized processes": {
+            expect: checkEnvIntruders(evilPseudoProcess.env),
+            toEqual: true
+        },
+        "It should allow an authorized process to succeed": {
+            expect: checkEnvIntruders(goodPseudoProcess.env, ["PORT"]),
+            toEqual: false
+        },
+        "It should detect unauthorized processes amongst authorized ones": {
+            expect: checkEnvIntruders(mixedPseudoProcess.env, ["PORT"]),
+            toEqual: true
+        },
+        "It should allow empty variables through the environment": {
+            expect: checkEnvIntruders(emptyPseudoProcess.env),
+            toEqual: false
+        },
+        "It should allow unused authorized processes": {
+            expect: checkEnvIntruders(emptyPseudoProcess.env, ["PORT"]),
+            toEqual: false
+        }
     };
 
     const failingAssertions = Object.keys(assertions)
-        .filter((assertion) => !assertions[assertion]);
+        .filter(function (assertion) {
+            const {expect, toEqual} = assertions[assertion];
+            return !(expect === toEqual);
+        });
 
     failingAssertions.forEach(function (assertion) {
         console.error(
