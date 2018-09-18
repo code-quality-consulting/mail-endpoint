@@ -2,7 +2,10 @@
     node
 */
 
-export default function assertionLogger(assertions, reason, value) {
+export default function assertionLogger(options) {
+
+    const {assertions, reason, value, name} = options;
+
     if (reason) {
         console.error(reason);
     }
@@ -19,8 +22,7 @@ export default function assertionLogger(assertions, reason, value) {
         });
 
         if (failingAssertions.length === 0) {
-            console.log("All post tests are passing.");
-            // All post tests are passing in file: ${currentFileName}
+            console.log(name);
         }
     }
 };
