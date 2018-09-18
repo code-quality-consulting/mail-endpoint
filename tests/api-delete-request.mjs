@@ -3,14 +3,14 @@
 */
 import https from "https";
 
-function deleteEmail(environmentVariables) {
+function deleteEmail(environmentVariables, expectedPayload) {
     return function requestor(callback) {
-        const emailToDelete = "demo@cqc.com";
+        const {email} = expectedPayload;
         const {PORT, HOST, ML_API_KEY} = environmentVariables;
         const options = {
             hostname: HOST,
             port: PORT,
-            path: `/api/v2/subscribers/${emailToDelete}`,
+            path: `/api/v2/subscribers/${email}`,
             method: "DELETE",
             headers: {
                 "X-MailerLite-ApiKey": ML_API_KEY
