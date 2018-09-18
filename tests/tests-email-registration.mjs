@@ -42,10 +42,26 @@ function emailRegistrationAssertions(value, reason) {
         } // the email string should include one @ and one .
     };
 
-    assertionLogger(assertions, reason, value);
+    const options = {
+        assertions,
+        reason,
+        value,
+        name: "All tests pass in file: api-post-request"
+    };
+
+    assertionLogger(options);
 
     // then deletes email
-    deleteEmail({PORT: ML_PORT, HOST: ML_HOST, ML_API_KEY})(
+    deleteEmail(
+        {
+            PORT: ML_PORT,
+            HOST: ML_HOST,
+            ML_API_KEY
+        },
+        {
+            email: "demo@cqc.com"
+        }
+    )(
         function (value, reason) {
             if (reason) {
                 console.error(reason);
@@ -59,10 +75,10 @@ function emailRegistrationAssertions(value, reason) {
 
 // checks for email with GET
 // then posts email
-function testEmailRegistration(environmentVariables) {
+function testEmailRegistration(environmentVariables, expectedPayload) {
     return parseq.sequence([
         checkEmailAbsence(environmentVariables),
-        registerEmail(environmentVariables)
+        registerEmail(environmentVariables, expectedPayload)
     ])(emailRegistrationAssertions);
 }
 
