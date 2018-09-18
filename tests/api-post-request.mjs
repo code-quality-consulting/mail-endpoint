@@ -3,15 +3,13 @@
 */
 import https from "https";
 
-function registerEmail(environmentVariables) {
+function registerEmail(environmentVariables, registrationPayload) {
     return function registrationRequestor(callback) {
-
+        const {email, name, fields} = registrationPayload;
         const postData = JSON.stringify({
-            email: "demo@cqc.com",
-            name: "Zach and Ben",
-            fields: {
-                company: "MailerLite"
-            }
+            email: email,
+            name: name,
+            fields: fields
         });
 
         const {PORT, HOST, ML_API_KEY, CQC_GROUP_ID} = environmentVariables;
@@ -38,7 +36,13 @@ function registerEmail(environmentVariables) {
             });
         });
 
-        req.on("error", (e) => callback(undefined, `Problem with request: ${e.message}`));
+        req.on(
+            "error",
+            (e) => callback(
+                undefined,
+                `Problem with request: ${e.message}`
+            )
+        );
 
         req.setTimeout(5000, function () {
             console.error("No response");
