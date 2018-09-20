@@ -2,7 +2,7 @@
     node
 */
 import checkEmailAbsence from "../check-email-absence";
-import registerEmail from "../api-post-request";
+import registerEmail from "../../src/api-post-request";
 import deleteEmail from "../api-delete-request";
 import parseq from "../../dependencies/parseq";
 import assertionLogger from "../assertion-logger";
