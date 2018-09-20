@@ -1,11 +1,11 @@
 /*jslint
     node
 */
-import checkEmailAbsence from "./check-email-absence";
-import registerEmail from "./api-post-request";
-import deleteEmail from "./api-delete-request";
-import parseq from "../dependencies/parseq";
-import assertionLogger from "./assertion-logger";
+import checkEmailAbsence from "../check-email-absence";
+import registerEmail from "../api-post-request";
+import deleteEmail from "../api-delete-request";
+import parseq from "../../dependencies/parseq";
+import assertionLogger from "../assertion-logger";
 const {ML_HOST, ML_PORT, ML_API_KEY} = process.env;
 
 function emailRegistrationAssertions(value, reason) {
