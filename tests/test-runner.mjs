@@ -3,7 +3,8 @@
 */
 
 import testClientIntake from "./test-client-intake/test-client-intake";
-import testEmailRegistration from "./tests-email-registration";
+import testEmailRegistration from
+        "./test-email-registration/tests-email-registration";
 import testEnvVariables from "./test-env";
 
 const {
