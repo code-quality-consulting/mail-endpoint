@@ -7,7 +7,14 @@ import makeTester from "./make-tester";
 import {makeServer} from "../../server";
 
 function testClientIntake(environmentVariables, payload) {
-    parseq.sequence([makeServer(environmentVariables), makeTester(environmentVariables, payload)])(testRequest);
+    parseq.sequence(
+        [
+            makeServer(environmentVariables),
+            makeTester(environmentVariables, payload)
+            // getRequestor to check that the data was
+            // successfully submitted
+        ]
+    )(testRequest);
 }
 
 export default testClientIntake;
