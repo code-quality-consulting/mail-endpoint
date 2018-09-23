@@ -21,8 +21,8 @@ function makeServer(environmentVariables) {
                     res.end();
                 });
         }).listen(
-            environmentVariables.PORT,
-            environmentVariables.HOST,
+            environmentVariables.CQC_PORT,
+            environmentVariables.CQC_HOST,
             function () {
                 callback(server);
             }

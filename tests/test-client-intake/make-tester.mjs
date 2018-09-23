@@ -8,10 +8,10 @@ export default function makeTester(environmentVariables, expectedPayload) {
 
         const postData = JSON.stringify(expectedPayload);
 
-        let {PORT, HOST} = environmentVariables;
+        let {CQC_PORT, CQC_HOST} = environmentVariables;
         const options = {
-            hostname: HOST,
-            port: PORT,
+            hostname: CQC_HOST,
+            port: CQC_PORT,
             path: "/email-address",
             method: "POST",
             headers: {

@@ -12,10 +12,15 @@ function registerEmail(environmentVariables, registrationPayload) {
             fields: fields
         });
 
-        const {PORT, HOST, ML_API_KEY, CQC_GROUP_ID} = environmentVariables;
+        const {
+            ML_PORT,
+            ML_HOST,
+            ML_API_KEY,
+            CQC_GROUP_ID
+        } = environmentVariables;
         const options = {
-            hostname: HOST,
-            port: PORT,
+            hostname: ML_HOST,
+            port: ML_PORT,
             path: `/api/v2/groups/${CQC_GROUP_ID}/subscribers`,
             method: "POST",
             headers: {

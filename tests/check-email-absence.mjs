@@ -6,11 +6,11 @@ import https from "https";
 function checkEmailAbsence(environmentVariables) {
     return function testRequestor(callback) {
         const email = "demo@cqc.com";
-        const {PORT, HOST, ML_API_KEY} = environmentVariables;
+        const {ML_PORT, ML_HOST, ML_API_KEY} = environmentVariables;
         const options = {
-            hostname: HOST,
+            hostname: ML_HOST,
             path: `/api/v2/subscribers/${email}`,
-            port: PORT,
+            port: ML_PORT,
             headers: {
                 "Content-Type": "application/json",
                 "X-MailerLite-ApiKey": ML_API_KEY

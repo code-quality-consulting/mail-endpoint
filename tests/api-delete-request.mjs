@@ -6,10 +6,10 @@ import https from "https";
 function deleteEmail(environmentVariables, expectedPayload) {
     return function requestor(callback) {
         const {email} = expectedPayload;
-        const {PORT, HOST, ML_API_KEY} = environmentVariables;
+        const {ML_PORT, ML_HOST, ML_API_KEY} = environmentVariables;
         const options = {
-            hostname: HOST,
-            port: PORT,
+            hostname: ML_HOST,
+            port: ML_PORT,
             path: `/api/v2/subscribers/${email}`,
             method: "DELETE",
             headers: {
