@@ -3,7 +3,7 @@
 */
 import assertionLogger from "../assertion-logger";
 
-export default function testRequest(value, reason) {
+export default function expectUserInfo(callback, value) {
     const assertions = {
         "Incorrect email address": {
             expect: typeof(value.email) === "string"
@@ -31,12 +31,9 @@ export default function testRequest(value, reason) {
         }
     };
 
-    const options = {
+    const test = {
         assertions,
-        reason,
-        value,
-        name: "All tests passing in file: client-post-request"
+        successMessage: "All tests passing in file: client-post-request"
     };
-
-    assertionLogger(options);
+    assertionLogger(test, callback);
 };

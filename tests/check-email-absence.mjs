@@ -26,7 +26,9 @@ function checkEmailAbsence(environmentVariables) {
             res.on("end", function () {
                 let subscriberInfo = JSON.parse(data);
                 if (subscriberInfo.error) {
-                    callback(subscriberInfo.error.message);
+                    callback(
+                        subscriberInfo.error.message
+                    );
                 }
                 if (!subscriberInfo.error) {
                     callback(

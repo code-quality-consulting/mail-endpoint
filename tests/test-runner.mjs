@@ -8,6 +8,7 @@ import testEmailRegistration from
 import testEmailRegistrationServer from
         "./test-email-registration-server/test-email-registration-server";
 import testEnvVariables from "./test-env";
+import parseq from "../dependencies/parseq";
 
 const {
     CQC_GROUP_ID,
@@ -20,36 +21,12 @@ const {
 
 // check for email in ML db with GET
 // post email to ML db with POST
-testEmailRegistration(
-    {
-        ML_PORT,
-        ML_HOST,
-        CQC_GROUP_ID,
-        ML_API_KEY
-    },
-    {
-        email: "demo@cqc.com",
-        name: "Zach and Ben",
-        fields: {
-            company: "MailerLite"
-        }
-    }
-);
-// client-side POST to CQC
 /*
-testClientIntake(
-    {
-        CQC_PORT,
-        CQC_HOST
-    },
-    {
-        email: "pseudouser@pseudodomains.com",
-        groups: ["tdd"],
-        firstName: "Pseudo",
-        lastName: "User"
-    }
-);
+
 */
+// client-side POST to CQC
+
+/*
 testEmailRegistrationServer(
     {
         ML_HOST,
@@ -63,5 +40,53 @@ testEmailRegistrationServer(
         email: "demo@cqc.com"
     }
 );
+*/
+
+parseq.sequence([
+    testClientIntake(
+        {
+            CQC_PORT,
+            CQC_HOST
+        },
+        {
+            email: "pseudouser@pseudodomains.com",
+            groups: ["tdd"],
+            firstName: "Pseudo",
+            lastName: "User"
+        }
+    )
+    /*testEmailRegistration(
+        {
+            ML_PORT,
+            ML_HOST,
+            CQC_GROUP_ID,
+            ML_API_KEY
+        },
+        { // this is the value I get back
+            email: "demo@cqc.com",
+            name: "Zach and Ben",
+            fields: {
+                company: "MailerLite"
+            }
+        }
+    )*/
+])(function (successMessage, reason) {
+    if (successMessage) {
+        console.log(successMessage);
+    }
+    if (reason) {
+        if (reason.failingAssertions) {
+            const {failingAssertions} = reason;
+            failingAssertions.forEach(function (assertion) {
+                console.error(
+                    assertion
+                );
+            });
+        }
+        if (!reason.failingAssertions) {
+            console.log("Here is the reason: ", reason);
+        }
+    }
+});
 
 testEnvVariables();

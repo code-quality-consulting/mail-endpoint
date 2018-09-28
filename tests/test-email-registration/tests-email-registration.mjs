@@ -13,8 +13,7 @@ function testEmailRegistration(environmentVariables, expectedPayload) {
     return parseq.sequence([
         checkEmailAbsence(environmentVariables),
         registerEmail(environmentVariables, expectedPayload)
-    ])(emailRegistrationAssertions); // asserts against response
-                                        // then sends delete req
+    ])
 }
 
 export default testEmailRegistration;
