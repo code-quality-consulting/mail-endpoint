@@ -1,7 +1,7 @@
 import assertionLogger from "../assertion-logger";
 import deleteEmail from "../delete-email";
 
-export default function expectEmailRegistered(tearDown, composeAssertions) {
+export default function expectEmailRegistered(composeAssertions, tearDown) {
     return function expectationRequestor (callback, value) {
         const assertions = composeAssertions(value);
         const test = {

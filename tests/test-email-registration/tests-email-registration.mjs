@@ -14,10 +14,7 @@ function testEmailRegistration(environmentVariables, expectedPayload) {
     return parseq.sequence([
         checkEmailAbsence(environmentVariables),
         registerEmail(environmentVariables, expectedPayload),
-        expectsEmailRegistered(deleteEmail(
-            environmentVariables,
-            expectedPayload
-        ), function (value) {
+        expectsEmailRegistered(function (value) {
             return {
                 "It should generate an id": {
                     expect: value.id === 283325272034485980,
@@ -50,7 +47,10 @@ function testEmailRegistration(environmentVariables, expectedPayload) {
                     actualResult: value.email
                 }
             };
-        })
+        }, deleteEmail(
+            environmentVariables,
+            expectedPayload
+        ))
     ])
 }
 
