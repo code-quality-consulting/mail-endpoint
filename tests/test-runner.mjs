@@ -5,8 +5,8 @@
 import testClientIntake from "./test-client-intake/test-client-intake";
 import testEmailRegistration from
         "./test-email-registration/tests-email-registration";
-import testEmailRegistrationServer from
-        "./test-email-registration-server/test-email-registration-server";
+//import testEmailRegistrationServer from
+//        "./test-email-registration-server/test-email-registration-server";
 import testEnvVariables from "./test-env";
 import parseq from "../dependencies/parseq";
 
@@ -54,8 +54,8 @@ parseq.sequence([
             firstName: "Pseudo",
             lastName: "User"
         }
-    )
-    /*testEmailRegistration(
+    ),
+    testEmailRegistration(
         {
             ML_PORT,
             ML_HOST,
@@ -69,7 +69,7 @@ parseq.sequence([
                 company: "MailerLite"
             }
         }
-    )*/
+    )
 ])(function (successMessage, reason) {
     if (successMessage) {
         console.log(successMessage);

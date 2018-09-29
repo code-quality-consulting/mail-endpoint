@@ -3,9 +3,10 @@
 */
 import https from "https";
 
-function deleteEmail(environmentVariables, expectedPayload) {
-    return function requestor(callback) {
-        const {email} = expectedPayload;
+function deleteEmail(environmentVariables, userInfo) {
+    return function deleteRequest(callback) {
+        const {email} = userInfo;
+        console.log("The email ", email, userInfo);
         const {ML_PORT, ML_HOST, ML_API_KEY} = environmentVariables;
         const options = {
             hostname: ML_HOST,

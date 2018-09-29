@@ -2,7 +2,7 @@
     node
 */
 
-export default function assertionLogger(test, callback) {
+export default function assertionLogger(test, callback, tearDown) {
 
     const {assertions, successMessage} = test;
     const failingAssertions = Object.keys(assertions)
@@ -10,6 +10,9 @@ export default function assertionLogger(test, callback) {
             const {expect, toEqual} = assertions[assertion];
             return !(expect === toEqual);
         });
+    if (tearDown) {
+        return tearDown(callback);
+    }
     if (failingAssertions.length === 0) {
         return callback(successMessage);
     }

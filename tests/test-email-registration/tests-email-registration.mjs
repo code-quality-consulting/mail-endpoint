@@ -4,7 +4,8 @@
 
 import checkEmailAbsence from "../check-email-absence";
 import registerEmail from "../../src/api-post-request";
-import emailRegistrationAssertions from "./email-registration-assertions"
+import expectsEmailRegistered from "./expects-email-registered";
+import deleteEmail from "../delete-email";
 import parseq from "../../dependencies/parseq";
 
 // checks for email with GET
@@ -12,7 +13,11 @@ import parseq from "../../dependencies/parseq";
 function testEmailRegistration(environmentVariables, expectedPayload) {
     return parseq.sequence([
         checkEmailAbsence(environmentVariables),
-        registerEmail(environmentVariables, expectedPayload)
+        registerEmail(environmentVariables, expectedPayload),
+        expectsEmailRegistered(deleteEmail(
+            environmentVariables,
+            expectedPayload
+        ))
     ])
 }
 
