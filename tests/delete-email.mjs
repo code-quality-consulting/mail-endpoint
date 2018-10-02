@@ -4,7 +4,7 @@
 import https from "https";
 
 function deleteEmail(environmentVariables, userInfo) {
-    return function deleteRequest(callback) {
+    return function deleteRequest(callback, successOrFailure) {
         const {email} = userInfo;
         console.log("The email ", email, userInfo);
         const {ML_PORT, ML_HOST, ML_API_KEY} = environmentVariables;
@@ -23,7 +23,12 @@ function deleteEmail(environmentVariables, userInfo) {
                 console.log("On data");
             });
             res.on("end", function () {
-                callback();
+                if (typeof successOrFailure === "string") {
+                    callback(successOrFailure);
+                }
+                if (Array.isArray(successOrFailure)) {
+                    callback(undefined, successOrFailure);
+                }
             });
         });
 

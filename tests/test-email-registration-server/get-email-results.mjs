@@ -20,6 +20,8 @@ function getEmailResults(
         };
 
         const req = https.get(options, function (res) {
+            const {statusCode} = res;
+ 
             res.setEncoding("utf8");
             let data = "";
             res.on("data", function (chunk) {
@@ -27,13 +29,13 @@ function getEmailResults(
             });
             res.on("end", function () {
                 let subscriberInfo = JSON.parse(data);
-                if (subscriberInfo.error) {
-                    callback(subscriberInfo.error.message);
+                if (statusCode === 200) {
+                    callback(subscriberInfo);
                 }
-                if (!subscriberInfo.error) {
+                if (statusCode === 404) {
                     callback(
                         undefined,
-                        `${subscriberInfo.email} is in the database.`
+                        subscriberInfo.error 
                     );
                 }
             });

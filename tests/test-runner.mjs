@@ -5,8 +5,8 @@
 import testClientIntake from "./test-client-intake/test-client-intake";
 import testEmailRegistration from
         "./test-email-registration/tests-email-registration";
-//import testEmailRegistrationServer from
-//        "./test-email-registration-server/test-email-registration-server";
+import testEmailRegistrationServer from
+        "./test-email-registration-server/test-email-registration-server";
 import testEnvVariables from "./test-env";
 import parseq from "../dependencies/parseq";
 
@@ -26,23 +26,10 @@ const {
 */
 // client-side POST to CQC
 
-/*
-testEmailRegistrationServer(
-    {
-        ML_HOST,
-        ML_PORT,
-        CQC_HOST,
-        CQC_PORT,
-        ML_API_KEY
-    },
-    {
-        name: "Zach and Ben",
-        email: "demo@cqc.com"
-    }
-);
-*/
 
-parseq.sequence([
+
+
+parseq.sequence([/*
     testClientIntake(
         {
             CQC_PORT,
@@ -54,12 +41,12 @@ parseq.sequence([
             firstName: "Pseudo",
             lastName: "User"
         }
-    ),
+    ),*/
     testEmailRegistration(
         {
             ML_PORT,
             ML_HOST,
-            CQC_GROUP_ID,
+            CQC_GROUP_ID, //delete after passing
             ML_API_KEY
         },
         { // this is the value I get back
@@ -68,6 +55,19 @@ parseq.sequence([
             fields: {
                 company: "MailerLite"
             }
+        }
+    ),
+    testEmailRegistrationServer(
+        {
+            ML_HOST,
+            ML_PORT,
+            CQC_HOST,
+            CQC_PORT,
+            ML_API_KEY
+        },
+        {
+            name: "Zach and Ben",
+            email: "demo@cqc.com"
         }
     )
 ])(function (successMessage, reason) {

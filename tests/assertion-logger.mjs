@@ -11,11 +11,16 @@ export default function assertionLogger(test, callback, tearDown) {
             return !(expect === toEqual);
         });
     if (tearDown) {
-        return tearDown(callback);
+        if (failingAssertions.length === 0) {
+            tearDown(callback, successMessage);
+        }
+        tearDown(callback, failingAssertions);
     }
     if (failingAssertions.length === 0) {
-        return callback(successMessage);
+        callback(successMessage);
     }
-    return callback(undefined, failingAssertions);
+    if (failingAssertions.length !== 0) {
+        callback(undefined, failingAssertions);
+    } 
 };
 

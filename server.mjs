@@ -24,6 +24,7 @@ function makeServer(environmentVariables) {
             environmentVariables.CQC_PORT,
             environmentVariables.CQC_HOST,
             function () {
+                console.log("Hello server.");
                 callback(server);
             }
         );
