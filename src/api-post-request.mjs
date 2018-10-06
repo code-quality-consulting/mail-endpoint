@@ -27,6 +27,7 @@ function registerEmail(environmentVariables, registrationPayload) {
                 "Content-Type": "application/json",
                 "Content-Length": Buffer.byteLength(postData),
                 "X-MailerLite-ApiKey": ML_API_KEY
+
             }
         };
         const req = https.request(options, function (res) {
@@ -34,10 +35,16 @@ function registerEmail(environmentVariables, registrationPayload) {
             let data = "";
             res.on("data", function (chunk) {
                 data += chunk;
+
             });
             res.on("end", function () {
-                let subscriberInfo = data;
-                callback(JSON.parse(subscriberInfo));
+                let subscriberInfo = JSON.parse(data);
+                if (subscriberInfo.error) {
+                    callback(undefined, subscriberInfo);
+                }
+                if (!subscriberInfo.error) {
+                    callback(subscriberInfo);
+                }
             });
         });
 

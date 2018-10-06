@@ -4,11 +4,12 @@
 import https from "https";
 
 function getEmailResults(
-    environmentVariables
+    environmentVariables,
+    expectedPayload
 ) {
     return function testRequestor(callback) {
-        const email = "pseudouser@pseudodomains.com";
         const {ML_PORT, ML_HOST, ML_API_KEY} = environmentVariables;
+        const {email} = expectedPayload;
         const options = {
             hostname: ML_HOST,
             path: `/api/v2/subscribers/${email}`,

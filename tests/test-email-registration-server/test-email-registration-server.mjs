@@ -8,17 +8,18 @@ import expectEmailRegisteredByServer from
 import getEmailResults from "./get-email-results";
 import clientPostToCQC from "./client-post-to-cqc";
 import parseq from "../../dependencies/parseq";
+import deleteEmail from "../delete-email";
+
 
 function testEmailRegistrationServer(
     environmentVariables,
     expectedPayload
 ) {
-    console.log("do we make it?");
     return parseq.sequence(
         [
             makeServer(environmentVariables),
             clientPostToCQC(environmentVariables, expectedPayload),
-            getEmailResults(environmentVariables), //close server after res 
+            getEmailResults(environmentVariables, expectedPayload),  
             expectEmailRegisteredByServer(function (value) {
                 return {
                     "It should generate an id": {
@@ -52,7 +53,7 @@ function testEmailRegistrationServer(
                         actualResult: value.email
                     }
                 }
-            })
+            }, deleteEmail(environmentVariables, expectedPayload))
         ]
     )
 }

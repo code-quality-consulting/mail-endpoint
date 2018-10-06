@@ -21,6 +21,6 @@ export default function assertionLogger(test, callback, tearDown) {
     }
     if (failingAssertions.length !== 0) {
         callback(undefined, failingAssertions);
-    } 
+    }
 };
 

@@ -30,7 +30,7 @@ export default function clientPostToCQC(
             });
             res.on("end", function () {
                 let subscriberInfo = data;
-                callback(JSON.parse(subscriberInfo));
+                callback(subscriberInfo);
                 server.close(() => console.log("Server closed."));
             });
         });

@@ -61,7 +61,7 @@ function testEnvVariables() {
     });
 
     if (failingAssertions.length === 0) {
-        console.log("All tests are passing.");
+        console.log("All tests are passing for environment variables.");
     }
 
 }

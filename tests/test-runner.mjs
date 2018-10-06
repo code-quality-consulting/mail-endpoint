@@ -19,17 +19,8 @@ const {
     ML_HOST
 } = process.env;
 
-// check for email in ML db with GET
-// post email to ML db with POST
+parseq.sequence([
 /*
-
-*/
-// client-side POST to CQC
-
-
-
-
-parseq.sequence([/*
     testClientIntake(
         {
             CQC_PORT,
@@ -41,7 +32,8 @@ parseq.sequence([/*
             firstName: "Pseudo",
             lastName: "User"
         }
-    ),*/
+    ),
+*/
     testEmailRegistration(
         {
             ML_PORT,
@@ -49,7 +41,7 @@ parseq.sequence([/*
             CQC_GROUP_ID, //delete after passing
             ML_API_KEY
         },
-        { // this is the value I get back
+        { // value/expectedPayload
             email: "demo@cqc.com",
             name: "Zach and Ben",
             fields: {
@@ -63,11 +55,15 @@ parseq.sequence([/*
             ML_PORT,
             CQC_HOST,
             CQC_PORT,
+            CQC_GROUP_ID,
             ML_API_KEY
         },
         {
             name: "Zach and Ben",
-            email: "demo@cqc.com"
+            email: "demo@cqc.com",
+            fields: {
+                company: "MailerLite"
+            }
         }
     )
 ])(function (successMessage, reason) {
@@ -75,7 +71,7 @@ parseq.sequence([/*
         console.log(successMessage);
     }
     if (reason) {
-        if (reason.failingAssertions) {
+        if (reason.failingAssertions) { // doesn't pass our tests
             const {failingAssertions} = reason;
             failingAssertions.forEach(function (assertion) {
                 console.error(
@@ -83,7 +79,7 @@ parseq.sequence([/*
                 );
             });
         }
-        if (!reason.failingAssertions) {
+        if (!reason.failingAssertions) { // there's an error
             console.log("Here is the reason: ", reason);
         }
     }
