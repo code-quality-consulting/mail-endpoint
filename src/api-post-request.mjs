@@ -18,6 +18,7 @@ function registerEmail(environmentVariables, registrationPayload) {
             ML_API_KEY,
             CQC_GROUP_ID
         } = environmentVariables;
+        
         const options = {
             hostname: ML_HOST,
             port: ML_PORT,
@@ -39,6 +40,7 @@ function registerEmail(environmentVariables, registrationPayload) {
             });
             res.on("end", function () {
                 let subscriberInfo = JSON.parse(data);
+                console.log("api-post-req: line 43: subInfo: ", subscriberInfo);
                 if (subscriberInfo.error) {
                     callback(undefined, subscriberInfo);
                 }

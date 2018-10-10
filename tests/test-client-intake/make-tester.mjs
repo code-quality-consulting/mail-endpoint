@@ -8,7 +8,7 @@ export default function makeTester(environmentVariables, expectedPayload) {
 
         const postData = JSON.stringify(expectedPayload);
 
-        let {CQC_PORT, CQC_HOST} = environmentVariables;
+        const {CQC_PORT, CQC_HOST} = environmentVariables;
         const options = {
             hostname: CQC_HOST,
             port: CQC_PORT,

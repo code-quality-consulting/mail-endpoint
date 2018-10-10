@@ -8,6 +8,7 @@ import testEmailRegistration from
 import testEmailRegistrationServer from
         "./test-email-registration-server/test-email-registration-server";
 import testEnvVariables from "./test-env";
+import testGetIndex from "./test-document-render/test-get-index";
 import parseq from "../dependencies/parseq";
 
 const {
@@ -20,11 +21,14 @@ const {
 } = process.env;
 
 parseq.sequence([
-/*
-    testClientIntake(
+    /*testClientIntake(
         {
+            CQC_GROUP_ID,
             CQC_PORT,
-            CQC_HOST
+            CQC_HOST,
+            ML_API_KEY,
+            ML_PORT,
+            ML_HOST // added this because the server requires it now
         },
         {
             email: "pseudouser@pseudodomains.com",
@@ -32,8 +36,13 @@ parseq.sequence([
             firstName: "Pseudo",
             lastName: "User"
         }
+    ),*/
+    testGetIndex(
+        {
+            CQC_PORT,
+            CQC_HOST
+        }
     ),
-*/
     testEmailRegistration(
         {
             ML_PORT,

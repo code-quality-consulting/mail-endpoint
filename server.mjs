@@ -3,10 +3,13 @@
 */
 
 import http from "http";
+import fs from "fs";
 import registerEmail from "./src/api-post-request";
 
 function makeServer(environmentVariables) {
     return function serverRequestor(callback) {
+        // fs.readFile() needs to be used somewhere 
+
         const server = http.createServer(function (req, res) {
             let body = [];
             req.on("error", (err) => console.err(err))
