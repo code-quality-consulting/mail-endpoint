@@ -37,12 +37,12 @@ parseq.sequence([
             lastName: "User"
         }
     ),*/
-    testGetIndex(
+    /*testGetIndex(
         {
             CQC_PORT,
             CQC_HOST
         }
-    ),
+    ),*/
     testEmailRegistration(
         {
             ML_PORT,
