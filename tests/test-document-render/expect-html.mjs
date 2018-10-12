@@ -5,6 +5,7 @@ export default function expectHtml(
     tearDown
 ) {
     return function expectationRequestor (callback, value) {
+
         const assertions = composeAssertions(value);  
         const test = {
             assertions,

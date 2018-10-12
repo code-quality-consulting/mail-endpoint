@@ -11,14 +11,13 @@ export default function testGetIndex(environmentVariables) {
             expectHtml(function (response) {
                 return {
                     "The content-type should be text/html": {
-                        expect: response.header["content-type"] 
+                        expect: response.headers["content-type"] 
                             === "text/html",
                         toEqual: true,
-                        actualResult: response.header["content-type"]
+                        actualResult: response.headers["content-type"]
                     } // add statusCode later
                 }
             })
         ]
     )
 }
-
