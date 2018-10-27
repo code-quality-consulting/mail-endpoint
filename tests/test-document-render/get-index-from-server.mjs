@@ -2,7 +2,7 @@ import http from "http";
 import fs from "fs";
 
 export default function getIndexFromServer(environmentVariables) {
-    return function testRequestor(callback, server) {
+    return function testRequestor(callback, {server}) {
         const {CQC_PORT, CQC_HOST} = environmentVariables;
         const options = {
             path: "/",
@@ -11,14 +11,25 @@ export default function getIndexFromServer(environmentVariables) {
             headers: {
                 "Content-Type": "text/html"
             }
-        }; //does server need to be used up here?
+        }; 
         const req = http.get(
             options,
             function (res) {
-                // method is null right now
-                console.log("line 18 getindex: res", res.method)
                 const { statusCode } = res;
                 const contentType = res.headers["content-type"];
+                res.setEncoding("utf8");
+                let data = ""; 
+                res.on("data", function (chunk) {
+                    data += chunk;
+                });
+                res.on("end", function () {
+                    data = data.substring(0, 15);
+                    callback({
+                        statusCode,
+                        contentType,
+                        data
+                    });
+                });
 
                 let error;
                 if (statusCode !== 200) {
@@ -34,9 +45,8 @@ export default function getIndexFromServer(environmentVariables) {
                     server.close();
                     return;
                 }
-
-                res.setEncoding('utf8');
-                callback(res);
+                // Closes server after test is complete/successful
+                server.close();
             }
         )
     }

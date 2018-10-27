@@ -5,7 +5,7 @@
 import {makeServer} from "../../server";
 import expectEmailRegisteredByServer from
     "./expect-email-registered-by-server";
-import getEmailResults from "./get-email-results";
+import getEmailResults from "../get-email-results";
 import clientPostToCQC from "./client-post-to-cqc";
 import parseq from "../../dependencies/parseq";
 import deleteEmail from "../delete-email";

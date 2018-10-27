@@ -4,7 +4,7 @@
 import https from "https";
 
 function registerEmail(environmentVariables, registrationPayload) {
-    return function registrationRequestor(callback) {
+    return function registrationRequestor(callback, value) {
         const {email, name, fields} = registrationPayload;
         const postData = JSON.stringify({
             email: email,
@@ -18,7 +18,7 @@ function registerEmail(environmentVariables, registrationPayload) {
             ML_API_KEY,
             CQC_GROUP_ID
         } = environmentVariables;
-        
+
         const options = {
             hostname: ML_HOST,
             port: ML_PORT,
@@ -36,16 +36,29 @@ function registerEmail(environmentVariables, registrationPayload) {
             let data = "";
             res.on("data", function (chunk) {
                 data += chunk;
-
             });
             res.on("end", function () {
                 let subscriberInfo = JSON.parse(data);
-                console.log("api-post-req: line 43: subInfo: ", subscriberInfo);
                 if (subscriberInfo.error) {
                     callback(undefined, subscriberInfo);
                 }
                 if (!subscriberInfo.error) {
-                    callback(subscriberInfo);
+                    const subscriber = {
+                        id: subscriberInfo.id,
+                        name: subscriberInfo.name,
+                        email: subscriberInfo.email
+                    };
+                    if (value) {
+                        if (Array.isArray(value.successMessages)) {
+                            return callback({
+                                successMessages: value.successMessages,
+                                subscriber
+                            });
+                        }
+                    }
+                    callback({
+                        subscriber
+                    });
                 }
             });
         });

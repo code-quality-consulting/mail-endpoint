@@ -4,7 +4,8 @@
 import http from "http";
 
 export default function makeTester(environmentVariables, expectedPayload) {
-    return function testRequestor(callback, server) {
+    return function testRequestor(callback, value) {
+        console.log("Here's the expected payload.", expectedPayload);
 
         const postData = JSON.stringify(expectedPayload);
 
@@ -27,8 +28,16 @@ export default function makeTester(environmentVariables, expectedPayload) {
             });
             res.on("end", function () {
                 let subscriberInfo = data;
-                callback(JSON.parse(subscriberInfo));
-                server.close(() => console.log("Server closed."));
+                subscriberInfo = JSON.parse(subscriberInfo);
+                console.log("What is sent from makeTester: ", {
+                    subscriber: subscriberInfo,
+                    successMessages: value.successMessages
+                });
+                callback({
+                    subscriber: subscriberInfo,
+                    successMessages: value.successMessages
+                });
+                value.server.close(() => console.log("Server closed."));
             });
         });
         req.on(

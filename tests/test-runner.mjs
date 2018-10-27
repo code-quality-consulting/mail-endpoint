@@ -21,26 +21,26 @@ const {
 } = process.env;
 
 parseq.sequence([
-    /*testClientIntake(
+    testGetIndex(
+        {
+            CQC_PORT,
+            CQC_HOST
+        }
+    ),
+    testClientIntake(
         {
             CQC_GROUP_ID,
             CQC_PORT,
             CQC_HOST,
             ML_API_KEY,
             ML_PORT,
-            ML_HOST // added this because the server requires it now
+            ML_HOST
         },
         {
             email: "pseudouser@pseudodomains.com",
             groups: ["tdd"],
             firstName: "Pseudo",
             lastName: "User"
-        }
-    ),*/
-    /*testGetIndex(
-        {
-            CQC_PORT,
-            CQC_HOST
         }
     ),*/
     testEmailRegistration(
@@ -50,14 +50,14 @@ parseq.sequence([
             CQC_GROUP_ID, //delete after passing
             ML_API_KEY
         },
-        { // value/expectedPayload
+        {
             email: "demo@cqc.com",
             name: "Zach and Ben",
             fields: {
                 company: "MailerLite"
             }
         }
-    ),
+    )/*,
     testEmailRegistrationServer(
         {
             ML_HOST,
@@ -75,9 +75,11 @@ parseq.sequence([
             }
         }
     )
-])(function (successMessage, reason) {
-    if (successMessage) {
-        console.log(successMessage);
+])(function ({successMessages}, reason) {
+    if (successMessages) {
+        successMessages.forEach(function (message) {
+            console.log(message);
+        });
     }
     if (reason) {
         if (reason.failingAssertions) { // doesn't pass our tests

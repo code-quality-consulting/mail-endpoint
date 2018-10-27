@@ -5,11 +5,26 @@ import assertionLogger from "../assertion-logger";
 
 export default function expectUserInfo(composeAssertions) {
     return function (callback, value) {
-        const assertions = composeAssertions(value);
-        const test = {
-            assertions,
-            successMessage: "All tests passing in file: client-post-request"
-        };
+        const {subscriber} = value;
+        const assertions = composeAssertions(subscriber);
+        let test;
+        if (!value.successMessages) {
+            test = {
+                assertions,
+                successMessages: [
+                    "All tests pass in file: test-client-intake"
+                ]
+            };
+        }
+        if (value.successMessages) {
+            test = {
+                assertions,
+                successMessages: [
+                    ...value.successMessages,
+                    "All tests pass in file: test-client-intake"
+                ]
+            };
+        }
         assertionLogger(test, callback);
     };
 };

@@ -6,13 +6,26 @@ export default function expectEmailRegisteredByServer(
     tearDown
 ) {
     return function expectationRequestor (callback, value) {
-        const assertions = composeAssertions(value);  
-        const test = {
-            assertions,
-            successMessage: "All tests pass in file: api-post-request"
-        };
-
+        const {subscriber} = value;
+        const assertions = composeAssertions(subscriber);
+        let test;
+        if (!value.successMessages) {
+            test = {
+                assertions,
+                successMessages: [
+                    "All tests pass in file: test-email-registration-server"
+                ]
+            };
+        }
+        if (value.successMessages) {
+            test = {
+                assertions,
+                successMessages: [
+                    ...value.successMessages,
+                    "All tests pass in file: test-email-registration-server"
+                ]
+            };
+        }
         assertionLogger(test, callback, tearDown);
-
     }
 }

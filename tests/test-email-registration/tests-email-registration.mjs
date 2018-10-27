@@ -1,7 +1,6 @@
 /*jslint
     node
 */
-
 import checkEmailAbsence from "../check-email-absence";
 import registerEmail from "../../src/api-post-request";
 import expectsEmailRegistered from "./expects-email-registered";

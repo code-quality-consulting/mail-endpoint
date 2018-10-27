@@ -138,7 +138,7 @@ function run(
             try {
                 cancel_array[number] = requestor(
                     function start_requestor_callback(value, reason) {
-
+                        //console.log("parseq: line 141: value", value);
 // This callback function is called by the 'requestor' when it is done.
 // If we are no longer running, then this call will be ignored.
 // For example, it might be a result that is sent back after the time

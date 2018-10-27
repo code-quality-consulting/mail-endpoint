@@ -3,8 +3,7 @@
 */
 
 export default function assertionLogger(test, callback, tearDown) {
-
-    const {assertions, successMessage} = test;
+    const {assertions, successMessages} = test;
     const failingAssertions = Object.keys(assertions)
         .filter(function (assertion) {
             const {expect, toEqual} = assertions[assertion];
@@ -12,15 +11,14 @@ export default function assertionLogger(test, callback, tearDown) {
         });
     if (tearDown) {
         if (failingAssertions.length === 0) {
-            tearDown(callback, successMessage);
+            tearDown(callback, successMessages);
         }
         tearDown(callback, failingAssertions);
     }
     if (failingAssertions.length === 0) {
-        callback(successMessage);
+        callback({successMessages});
     }
     if (failingAssertions.length !== 0) {
         callback(undefined, failingAssertions);
     }
 };
-

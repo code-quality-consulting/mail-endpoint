@@ -2,14 +2,14 @@
     node
 */
 import parseq from "../../dependencies/parseq.mjs";
-import makeTester from "./make-tester";
 import {makeServer} from "../../server";
+import makeTester from "./make-tester";
 import expectUserInfo from "./expect-user-info";
 
-function testClientIntake(environmentVariables, payload) {
+function testClientIntake(environmentVariables, expectedPayload) {
     return parseq.sequence([
         makeServer(environmentVariables),
-        makeTester(environmentVariables, payload),
+        makeTester(environmentVariables, expectedPayload),
         expectUserInfo(function (value) {
             return {
                 "Incorrect email address": {

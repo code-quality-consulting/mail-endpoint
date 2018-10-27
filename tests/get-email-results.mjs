@@ -7,7 +7,7 @@ function getEmailResults(
     environmentVariables,
     expectedPayload
 ) {
-    return function testRequestor(callback) {
+    return function testRequestor(callback, value) {
         const {ML_PORT, ML_HOST, ML_API_KEY} = environmentVariables;
         const {email} = expectedPayload;
         const options = {
@@ -31,7 +31,10 @@ function getEmailResults(
             res.on("end", function () {
                 let subscriberInfo = JSON.parse(data);
                 if (statusCode === 200) {
-                    callback(subscriberInfo);
+                    callback({
+                        subscriber: subscriberInfo,
+                        successMessages: value.successMessages
+                    });
                 }
                 if (statusCode === 404) {
                     callback(

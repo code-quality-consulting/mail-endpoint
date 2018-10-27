@@ -7,7 +7,7 @@ export default function clientPostToCQC(
     environmentVariables,
     expectedPayload
 ) {
-    return function testRequestor(callback, server) {
+    return function testRequestor(callback, value) {
 
         const postData = JSON.stringify(expectedPayload);
 
@@ -27,11 +27,13 @@ export default function clientPostToCQC(
             let data = "";
             res.on("data", function (chunk) {
                 data += chunk;
-            });
+            })
             res.on("end", function () {
-                let subscriberInfo = data;
-                callback(subscriberInfo);
-                server.close(() => console.log("Server closed."));
+                console.log("Here is the data received back: ", data)
+                callback({
+                    successMessages: value.successMessages
+                });
+                value.server.close(() => console.log("Server closed."));
             });
         });
         req.on(

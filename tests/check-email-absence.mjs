@@ -2,9 +2,10 @@
     node
 */
 import https from "https";
+import initializeMessages from "../library/initialize-messages";
 
 function checkEmailAbsence(environmentVariables) {
-    return function testRequestor(callback) {
+    return function testRequestor(callback, value) {
         const email = "demo@cqc.com";
         const {ML_PORT, ML_HOST, ML_API_KEY} = environmentVariables;
         const options = {
@@ -26,9 +27,7 @@ function checkEmailAbsence(environmentVariables) {
             res.on("end", function () {
                 let subscriberInfo = JSON.parse(data);
                 if (subscriberInfo.error) {
-                    callback(
-                        subscriberInfo.error.message
-                    );
+                    initializeMessages(callback, value);
                 }
                 if (!subscriberInfo.error) {
                     callback(
