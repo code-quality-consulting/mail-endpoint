@@ -22,7 +22,6 @@ function getEmailResults(
 
         const req = https.get(options, function (res) {
             const {statusCode} = res;
- 
             res.setEncoding("utf8");
             let data = "";
             res.on("data", function (chunk) {
@@ -39,7 +38,7 @@ function getEmailResults(
                 if (statusCode === 404) {
                     callback(
                         undefined,
-                        subscriberInfo.error 
+                        subscriberInfo.error
                     );
                 }
             });

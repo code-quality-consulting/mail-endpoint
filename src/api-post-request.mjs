@@ -48,17 +48,14 @@ function registerEmail(environmentVariables, registrationPayload) {
                         name: subscriberInfo.name,
                         email: subscriberInfo.email
                     };
-                    if (value) {
-                        if (Array.isArray(value.successMessages)) {
-                            return callback({
-                                successMessages: value.successMessages,
+                    callback(
+                        Object.assign(
+                            {
                                 subscriber
-                            });
-                        }
-                    }
-                    callback({
-                        subscriber
-                    });
+                            },
+                            value
+                        )
+                    );
                 }
             });
         });

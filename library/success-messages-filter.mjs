@@ -2,8 +2,8 @@
     node
 */
 
-export default function initializeMessages (callback, value) {
-    if (callback) {
+export default function successMessagesFilter () {
+    return function (callback, value) {
         if (value) {
             if (!value.successMessages) {
                 return callback(
@@ -19,7 +19,7 @@ export default function initializeMessages (callback, value) {
                 return callback(
                     Object.assign(
                         {
-                            successMessages: value.successMessages
+                            successMessages: [...value.successMessages]
                         },
                         value
                     )
@@ -30,8 +30,5 @@ export default function initializeMessages (callback, value) {
             value = {successMessages: []};
             return callback(value);
         }
-    }
-    if (!callback) {
-        console.error("A handleMessages function requires a callback.");
     }
 }

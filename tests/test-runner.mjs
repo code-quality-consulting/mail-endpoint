@@ -37,12 +37,13 @@ parseq.sequence([
             ML_HOST
         },
         {
-            email: "pseudouser@pseudodomains.com",
-            groups: ["tdd"],
-            firstName: "Pseudo",
-            lastName: "User"
+            name: "Zach and Ben",
+            email: "demo@cqc.com",
+            fields: {
+                company: "MailerLite"
+            }
         }
-    ),*/
+    ),
     testEmailRegistration(
         {
             ML_PORT,
@@ -57,7 +58,7 @@ parseq.sequence([
                 company: "MailerLite"
             }
         }
-    )/*,
+    ),
     testEmailRegistrationServer(
         {
             ML_HOST,

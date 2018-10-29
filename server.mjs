@@ -5,7 +5,6 @@
 import http from "http";
 import fs from "fs";
 import registerEmail from "./src/api-post-request";
-import initializeMessages from "./library/initialize-messages";
 
 function makeServer(environmentVariables) {
     return function serverRequestor(callback, value) {
@@ -39,7 +38,7 @@ function makeServer(environmentVariables) {
                                         name,
                                         email,
                                         id
-                                    } = value;
+                                    } = value.subscriber;
                                     const user = {
                                         name,
                                         email,
@@ -65,21 +64,9 @@ function makeServer(environmentVariables) {
             CQC_PORT,
             CQC_HOST,
             function () {
-                initializeMessages(
-                    callback,
+                callback(
                     Object.assign({server}, value)
                 );
-                /*if (value) {
-                    if (Array.isArray(value.successMessages)) {
-                        return callback({
-                            server,
-                            successMessages: [
-                                ...value.successMessages
-                            ]
-                        });
-                    }
-                }
-                callback(server);*/
             }
         );
     };

@@ -1,6 +1,8 @@
 import {makeServer} from "../../server";
 import parseq from "../../dependencies/parseq";
 import getIndexFromServer from "./get-index-from-server";
+import successMessagesFilter from 
+    "../../library/success-messages-filter.mjs";
 import expectHtml from "./expect-html";
 
 export default function testGetIndex(environmentVariables) {
@@ -8,6 +10,7 @@ export default function testGetIndex(environmentVariables) {
         [
             makeServer(environmentVariables),
             getIndexFromServer(environmentVariables),
+            successMessagesFilter(),
             expectHtml(function (response) {
                 return {
                     "The content-type should be text/html": {

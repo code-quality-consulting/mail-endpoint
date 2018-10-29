@@ -29,7 +29,6 @@ export default function clientPostToCQC(
                 data += chunk;
             })
             res.on("end", function () {
-                console.log("Here is the data received back: ", data)
                 callback({
                     successMessages: value.successMessages
                 });

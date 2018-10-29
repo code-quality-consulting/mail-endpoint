@@ -2,7 +2,6 @@
     node
 */
 import https from "https";
-import initializeMessages from "../library/initialize-messages";
 
 function checkEmailAbsence(environmentVariables) {
     return function testRequestor(callback, value) {
@@ -26,15 +25,22 @@ function checkEmailAbsence(environmentVariables) {
             });
             res.on("end", function () {
                 let subscriberInfo = JSON.parse(data);
-                if (subscriberInfo.error) {
-                    initializeMessages(callback, value);
-                }
                 if (!subscriberInfo.error) {
+                    callback(
+                        Object.assign(
+                            {
+                                subscriber: subscriberInfo
+                            },
+                            value
+                        )
+                    );
+                }
+                /*if (subscriberInfo.error) {
                     callback(
                         undefined,
                         `${subscriberInfo.email} is in the database.`
                     );
-                }
+                }*/
             });
         });
 

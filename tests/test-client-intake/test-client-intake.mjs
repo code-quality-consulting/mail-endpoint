@@ -4,38 +4,37 @@
 import parseq from "../../dependencies/parseq.mjs";
 import {makeServer} from "../../server";
 import makeTester from "./make-tester";
+import successMessagesFilter from
+        "../../library/success-messages-filter.mjs";
 import expectUserInfo from "./expect-user-info";
 
 function testClientIntake(environmentVariables, expectedPayload) {
     return parseq.sequence([
         makeServer(environmentVariables),
         makeTester(environmentVariables, expectedPayload),
+        successMessagesFilter(),
         expectUserInfo(function (value) {
             return {
                 "Incorrect email address": {
                     expect: typeof(value.email) === "string"
                             && value.email ===
-                            "pseudouser@pseudodomains.com",
+                            "demo@cqc.com",
                     toEqual: true,
                     actualValue: value.email
                 },
-                "Incorrect group": {
-                    expect: typeof(value.groups[0]) === "string"
-                            && value.groups[0] === "tdd",
+                "Incorrect name": {
+                    expect: typeof(value.name) === "string"
+                            && value.name ===
+                            "Zach and Ben",
                     toEqual: true,
-                    actualValue: value.groups[0]
+                    actualValue: value.name
                 },
-                "Incorrect first name": {
-                    expect: typeof(value.firstName) === "string"
-                            && value.firstName === "Pseudo",
+                "Incorrect id": {
+                    expect: typeof(value.id) === "number"
+                            && value.id ===
+                            283325272034485980,
                     toEqual: true,
-                    actualValue: value.firstName
-                },
-                "Incorrect last name": {
-                    expect: typeof(value.lastName) === "string"
-                            && value.lastName === "User",
-                    toEqual: true,
-                    actualValue: value.lastName
+                    actualValue: value.id
                 }
             };
         })
