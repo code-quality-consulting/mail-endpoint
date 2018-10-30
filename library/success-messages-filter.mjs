@@ -19,7 +19,7 @@ export default function successMessagesFilter () {
                 return callback(
                     Object.assign(
                         {
-                            successMessages: [...value.successMessages]
+                            successMessages: value.successMessages
                         },
                         value
                     )

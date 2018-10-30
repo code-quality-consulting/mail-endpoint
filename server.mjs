@@ -8,20 +8,52 @@ import registerEmail from "./src/api-post-request";
 
 function makeServer(environmentVariables) {
     return function serverRequestor(callback, value) {
+        console.log("Here's the value in the server: ", value)
         const {CQC_PORT, CQC_HOST} = environmentVariables;
         const server = http.createServer(function (req, res) {
             if (req.method === "GET") {
-                res.writeHead(200, {
-                    "Content-Type": "text/html",
-                    "X-Powered-By": "cqc"
-                });
-                const index = "/home/cqc/projects/homepage/carrd/index.html";
-                fs.readFile(index, "utf8", function (error, file) {
-                    if (error) {
-                        console.log(error);
-                    }
-                    res.end(file);
-                });
+                if (req.url === "/") {
+                    const index =
+                            "/home/cqc/projects/homepage/carrd/index.html";
+                    fs.readFile(index, "utf8", function (error, file) {
+                        if (error) {
+                            console.log(error);
+                        }
+                        res.writeHead(200, {
+                            "Content-Type": "text/html",
+                            "X-Powered-By": "cqc"
+                        });
+                        res.end(file);
+                    });
+                }
+                if (req.url === "/main.css") {
+                    const css =
+                            "/home/cqc/projects/homepage/carrd/assets/main.css";
+                    fs.readFile(css, "utf8", function (error, file) {
+                        if (error) {
+                            console.log(error);
+                        }
+                        res.writeHead(200, {
+                            "Content-Type": "text/css",
+                            "X-Powered-By": "cqc"
+                        });
+                        res.end(file);
+                    });
+                }
+                if (req.url === "/main.js") {
+                    const js =
+                            "/home/cqc/projects/homepage/carrd/assets/main.js";
+                    fs.readFile(js, "utf8", function (error, file) {
+                        if (error) {
+                            console.log(error);
+                        }
+                        res.writeHead(200, {
+                            "Content-Type": "application/javascript",
+                            "X-Powered-By": "cqc"
+                        });
+                        res.end(file);
+                    });
+                }
             }
             if (req.method === "POST") {
                 let body = [];

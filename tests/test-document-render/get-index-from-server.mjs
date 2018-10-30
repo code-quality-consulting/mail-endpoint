@@ -30,22 +30,6 @@ export default function getIndexFromServer(environmentVariables) {
                         data
                     });
                 });
-
-                let error;
-                if (statusCode !== 200) {
-                    error = new Error("Request Failed.\n" +
-                      `Status Code: ${statusCode}`);
-                } else if (!/^text\/html/.test(contentType)) {
-                    error = new Error("Invalid content-type.\n" +
-                      `Expected text/html but received ${contentType}`
-                    );
-                }
-                if (error) {
-                    callback(res);
-                    server.close();
-                    return;
-                }
-                // Closes server after test is complete/successful
                 server.close();
             }
         )

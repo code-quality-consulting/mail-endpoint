@@ -2,14 +2,16 @@
     node
 */
 
+import parseq from "../dependencies/parseq";
+import testGetIndex from "./test-document-render/test-get-index";
+import testGetCss from "./test-css-render/test-get-css";
+import testGetJs from "./test-javascript-render/test-get-js";
 import testClientIntake from "./test-client-intake/test-client-intake";
 import testEmailRegistration from
         "./test-email-registration/tests-email-registration";
 import testEmailRegistrationServer from
         "./test-email-registration-server/test-email-registration-server";
 import testEnvVariables from "./test-env";
-import testGetIndex from "./test-document-render/test-get-index";
-import parseq from "../dependencies/parseq";
 
 const {
     CQC_GROUP_ID,
@@ -22,6 +24,18 @@ const {
 
 parseq.sequence([
     testGetIndex(
+        {
+            CQC_PORT,
+            CQC_HOST
+        }
+    ),
+    testGetCss(
+        {
+            CQC_PORT,
+            CQC_HOST
+        }
+    ),
+    testGetJs(
         {
             CQC_PORT,
             CQC_HOST
@@ -76,14 +90,17 @@ parseq.sequence([
             }
         }
     )
-])(function ({successMessages}, reason) {
-    if (successMessages) {
-        successMessages.forEach(function (message) {
+])(function (value, reason) {
+    if (value) {
+        value.successMessages.forEach(function (message) {
             console.log(message);
         });
     }
+    if (!value) {
+        console.log("No successMessages");
+    }
     if (reason) {
-        if (reason.failingAssertions) { // doesn't pass our tests
+        if (reason.failingAssertions) {
             const {failingAssertions} = reason;
             failingAssertions.forEach(function (assertion) {
                 console.error(
@@ -91,7 +108,7 @@ parseq.sequence([
                 );
             });
         }
-        if (!reason.failingAssertions) { // there's an error
+        if (!reason.failingAssertions) {
             console.log("Here is the reason: ", reason);
         }
     }

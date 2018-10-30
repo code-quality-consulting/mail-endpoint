@@ -1,21 +1,20 @@
 import {makeServer} from "../../server";
 import parseq from "../../dependencies/parseq";
-import getIndexFromServer from "./get-index-from-server";
-import successMessagesFilter from 
-    "../../library/success-messages-filter.mjs";
-import expectHtml from "./expect-html";
+import getJsFromServer from "./get-js-from-server";
+import successMessagesFilter from "../../library/success-messages-filter";
+import expectJs from "./expect-js";
 
-export default function testGetIndex(environmentVariables) {
+export default function testGetJs(environmentVariables) {
     return parseq.sequence(
         [
             makeServer(environmentVariables),
-            getIndexFromServer(environmentVariables),
+            getJsFromServer(environmentVariables),
             successMessagesFilter(),
-            expectHtml(function (response) {
+            expectJs(function (response) {
                 return {
-                    "The content-type should be text/html": {
-                        expect: response.contentType 
-                            === "text/html",
+                    "The content-type should be application/javascript": {
+                        expect: response.contentType
+                            === "application/javascript",
                         toEqual: true,
                         actualResult: response.contentType
                     },
@@ -24,10 +23,10 @@ export default function testGetIndex(environmentVariables) {
                         toEqual: true,
                         actualResult: response.statusCode
                     },
-                    "The response sends an HTML document": {
-                        expect: response.data === "<!DOCTYPE HTML>",
+                    "The response sends a JavaScript file": {
+                        expect: response.data === "/*jslint",
                         toEqual: true,
-                        actualResult: response.statusCode
+                        actualResult: response.data
                     }
                 }
             })
