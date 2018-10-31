@@ -30,57 +30,32 @@ function makeServer(environmentVariables) {
                 ".ttf": "application/font-sfnt"
 			};
 			const parsedUrl = url.parse(req.url);
-            console.log("parsedUrl: ", parsedUrl)
 			const sanitizePath = path.normalize(parsedUrl.pathname);
-            console.log("sanitizePath: ", sanitizePath)
-            console.log(CQC_SERVERROOT)
-			//let pathname = path.join(CQC_SERVERROOT, sanitizePath);
- 
-			console.log("req.url", req.url);
-            if (req.method === "GET") {
-                if (req.url === "/") {
-                    const index =
-                            CQC_SERVERROOT + "/assets/index.html";
-                    fs.readFile(index, "utf8", function (error, file) {
-                        if (error) {
-                            console.log(error);
-                        }
-                        res.writeHead(200, {
-                            "Content-Type": "text/html",
-                            "X-Powered-By": "cqc"
-                        });
-                        res.end(file);
-                    });
-                }
-                if (req.url === "/main.css") {
-                    const css =
-                            CQC_SERVERROOT + "/assets/main.css";
-                    fs.readFile(css, "utf8", function (error, file) {
-                        if (error) {
-                            console.log(error);
-                        }
-                        res.writeHead(200, {
-                            "Content-Type": "text/css",
-                            "X-Powered-By": "cqc"
-                        });
-                        res.end(file);
-                    });
-                }
-                if (req.url === "/main.js") {
-                    const js =
-                            CQC_SERVERROOT + "/assets/main.js";
-                    fs.readFile(js, "utf8", function (error, file) {
-                        if (error) {
-                            console.log(error);
-                        }
-                        res.writeHead(200, {
-                            "Content-Type": "application/javascript",
-                            "X-Powered-By": "cqc"
-                        });
-                        res.end(file);
-                    });
-                }
-            }
+			let pathname = path.join(CQC_SERVERROOT, sanitizePath);
+			if (req.method === "GET") {
+				fs.exists(pathname, function (exist) {
+					if (!exist) {
+						res.statusCode = 404;
+						res.end(`File ${pathname} not found!`);
+						return;
+					}
+					if (fs.statSync(pathname).isDirectory()) {
+						pathname += "assets/index.html";
+					}
+					fs.readFile(pathname, function (err, file) {
+						if (err) {
+							res.statusCode = 500;
+							res.end(`Error getting the file: ${err}`);
+						}
+						const ext = path.parse(pathname).ext;
+						res.setHeader(
+							"Content-Type",
+							mimeType[ext] || "text/plain"
+						);
+						res.end(file);
+					});
+				});
+			}
             if (req.method === "POST") {
                 let body = [];
                 req.on("error", (err) => console.err(err))
