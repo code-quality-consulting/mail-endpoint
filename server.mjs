@@ -11,7 +11,7 @@ import registerEmail from "./src/api-post-request";
 function makeServer(environmentVariables) {
 	console.log(environmentVariables);
     return function serverRequestor(callback, value) {
-        const {CQC_PORT, CQC_HOST} = environmentVariables;
+        const {CQC_PORT, CQC_HOST, CQC_SERVERROOT} = environmentVariables;
         const server = http.createServer(function (req, res) {
 			const mimeType = {
 		    	".ico": "image/x-icon",
@@ -30,14 +30,17 @@ function makeServer(environmentVariables) {
                 ".ttf": "application/font-sfnt"
 			};
 			const parsedUrl = url.parse(req.url);
+            console.log("parsedUrl: ", parsedUrl)
 			const sanitizePath = path.normalize(parsedUrl.pathname);
-			let pathname = path.join(CQC_SERVERROOT, sanitizePath);
+            console.log("sanitizePath: ", sanitizePath)
+            console.log(CQC_SERVERROOT)
+			//let pathname = path.join(CQC_SERVERROOT, sanitizePath);
  
 			console.log("req.url", req.url);
             if (req.method === "GET") {
                 if (req.url === "/") {
                     const index =
-                            "/root/mail-endpoint/assets/index.html";
+                            CQC_SERVERROOT + "/assets/index.html";
                     fs.readFile(index, "utf8", function (error, file) {
                         if (error) {
                             console.log(error);
@@ -51,7 +54,7 @@ function makeServer(environmentVariables) {
                 }
                 if (req.url === "/main.css") {
                     const css =
-                            "/root/mail-endpoint/assets/main.css";
+                            CQC_SERVERROOT + "/assets/main.css";
                     fs.readFile(css, "utf8", function (error, file) {
                         if (error) {
                             console.log(error);
@@ -65,7 +68,7 @@ function makeServer(environmentVariables) {
                 }
                 if (req.url === "/main.js") {
                     const js =
-                            "/root/mail-endpoint/assets/main.js";
+                            CQC_SERVERROOT + "/assets/main.js";
                     fs.readFile(js, "utf8", function (error, file) {
                         if (error) {
                             console.log(error);

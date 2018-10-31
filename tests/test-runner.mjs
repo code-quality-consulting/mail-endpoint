@@ -15,6 +15,7 @@ import testEnvVariables from "./test-env";
 
 const {
     CQC_GROUP_ID,
+    CQC_SERVERROOT,
     ML_API_KEY,
     CQC_PORT,
     CQC_HOST,
@@ -25,18 +26,21 @@ const {
 parseq.sequence([
     testGetIndex(
         {
+            CQC_SERVERROOT,
             CQC_PORT,
             CQC_HOST
         }
     ),
     testGetCss(
         {
+            CQC_SERVERROOT,
             CQC_PORT,
             CQC_HOST
         }
     ),
     testGetJs(
         {
+            CQC_SERVERROOT,
             CQC_PORT,
             CQC_HOST
         }
@@ -79,6 +83,7 @@ parseq.sequence([
             ML_PORT,
             CQC_HOST,
             CQC_PORT,
+            CQC_SERVERROOT,
             CQC_GROUP_ID,
             ML_API_KEY
         },
