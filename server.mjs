@@ -29,6 +29,10 @@ function makeServer(environmentVariables) {
                 ".eot": "application/vnd.ms-fontobject",
                 ".ttf": "application/font-sfnt"
 			};
+			const parsedUrl = url.parse(req.url);
+			const sanitizePath = path.normalize(parsedUrl.pathname);
+			let pathname = path.join(CQC_SERVERROOT, sanitizePath);
+ 
 			console.log("req.url", req.url);
             if (req.method === "GET") {
                 if (req.url === "/") {
