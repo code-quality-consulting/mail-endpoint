@@ -3,18 +3,37 @@
 */
 
 import http from "http";
+import url from "url";
 import fs from "fs";
+import path from "path";
 import registerEmail from "./src/api-post-request";
 
 function makeServer(environmentVariables) {
+	console.log(environmentVariables);
     return function serverRequestor(callback, value) {
-        console.log("Here's the value in the server: ", value)
         const {CQC_PORT, CQC_HOST} = environmentVariables;
         const server = http.createServer(function (req, res) {
+			const mimeType = {
+		    	".ico": "image/x-icon",
+                ".html": "text/html",
+                ".js": "text/javascript",
+                ".json": "application/json",
+                ".css": "text/css",
+                ".png": "image/png",
+                ".jpg": "image/jpeg",
+                ".wav": "audio/wav",
+                ".mp3": "audio/mpeg",
+                ".svg": "image/svg+xml",
+                ".pdf": "application/pdf",
+                ".doc": "application/msword",
+                ".eot": "application/vnd.ms-fontobject",
+                ".ttf": "application/font-sfnt"
+			};
+			console.log("req.url", req.url);
             if (req.method === "GET") {
                 if (req.url === "/") {
                     const index =
-                            "/home/cqc/projects/homepage/carrd/index.html";
+                            "/root/mail-endpoint/assets/index.html";
                     fs.readFile(index, "utf8", function (error, file) {
                         if (error) {
                             console.log(error);
@@ -28,7 +47,7 @@ function makeServer(environmentVariables) {
                 }
                 if (req.url === "/main.css") {
                     const css =
-                            "/home/cqc/projects/homepage/carrd/assets/main.css";
+                            "/root/mail-endpoint/assets/main.css";
                     fs.readFile(css, "utf8", function (error, file) {
                         if (error) {
                             console.log(error);
@@ -42,7 +61,7 @@ function makeServer(environmentVariables) {
                 }
                 if (req.url === "/main.js") {
                     const js =
-                            "/home/cqc/projects/homepage/carrd/assets/main.js";
+                            "/root/mail-endpoint/assets/main.js";
                     fs.readFile(js, "utf8", function (error, file) {
                         if (error) {
                             console.log(error);
