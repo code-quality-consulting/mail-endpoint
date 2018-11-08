@@ -1,6 +1,10 @@
 /*jslint
     devel, browser
 */
+
+// https://stackoverflow.com/questions/23784614/node-js-ajax-sending-and-receiving-json
+
+
 // should move parseq into a directory shared by frontend and backend
 import parseq from "";
 
@@ -12,7 +16,7 @@ function testRequest(value, reason) {
     // we hit the CQC server from here which in turn will hit the ML server
     // I believe it just needs to hit the cqc url on port 443 which will 
     // then fire its request to ML
-    const cqcUrl = "https://codequalityconsulting.com";
+    const cqcUrl = "http://www.codequalityconsulting.com";
 
     // perhaps test that the input is an email (a string with an @ and a .)
     const assertions = {

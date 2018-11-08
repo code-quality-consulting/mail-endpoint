@@ -5,7 +5,7 @@ export default function getCssFromServer(environmentVariables) {
     return function testRequestor(callback, value) {
         const {CQC_PORT, CQC_HOST} = environmentVariables;
         const options = {
-            path: "/main.css",
+            path: "/",
             hostname: CQC_HOST,
             port: CQC_PORT,
         };
@@ -21,6 +21,7 @@ export default function getCssFromServer(environmentVariables) {
                 });
                 res.on("end", function () {
                     data = data.substring(0, 18);
+					console.log("Here is the data: ", data);
                     callback(
                         Object.assign(
                             {

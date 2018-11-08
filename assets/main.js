@@ -6,6 +6,7 @@
 // Carrd Core JS | carrd.co | License: MIT
 const {addEventListener} = window;
 var input = document.getElementsByClassName("form02-email");
+console.log("Here is the input value: ", input.value);
 var on = addEventListener;
 var $ = function (q) {
     "use strict";
